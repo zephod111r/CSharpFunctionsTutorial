@@ -19,7 +19,7 @@ namespace FunctionTutorial
         {
             _logger = logger;
 
-            string? connection = Environment.GetEnvironmentVariable("AzureWebJobsQueueServiceConnectionString");
+            string? connection = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
 
             string? table = Environment.GetEnvironmentVariable("TableName");
 

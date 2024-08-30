@@ -26,11 +26,11 @@ namespace FunctionTutorial.Functions
             _logger = logger;
 
             // Retrieve the Service Bus connection string from the environment variable
-            string? connectionString = Environment.GetEnvironmentVariable("AzureWebJobsQueueServiceConnectionString");
+            string? connectionString = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
 
             if (string.IsNullOrEmpty(connectionString))
             {
-                throw new InvalidOperationException("AzureWebJobsQueueServiceConnectionString is missing from the environment variables");
+                throw new InvalidOperationException("AzureWebJobsStorage is missing from the environment variables");
             }
 
             // Retrieve the queue name from the environment variable
