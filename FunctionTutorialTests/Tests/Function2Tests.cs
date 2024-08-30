@@ -13,7 +13,7 @@ namespace FunctionTutorial.Tests
     public class Function2Tests : TestSetup
     {
         [TestMethod]
-        public async Task Run_ReturnsOkObjectResult()
+        public async Task Run_ReturnsOkResult()
         {
             // Arrange
             using (ShimsContext.Create())
@@ -37,7 +37,7 @@ namespace FunctionTutorial.Tests
                 var function = new Function2(logger);
 
                 // Act
-                var result = await function.Run(mockRequest);
+                IActionResult result = await function.Run(mockRequest);
 
                 // Assert
                 Assert.IsInstanceOfType(result, typeof(OkResult));
