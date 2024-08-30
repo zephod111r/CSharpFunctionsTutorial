@@ -1,43 +1,47 @@
 using FunctionTutorial.Functions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.QualityTools.Testing.Fakes;
-using FunctionTutorial.Fakes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
+using System.Text.Json;
+using System.Text;
 
 namespace FunctionTutorial.Tests
 {
     [TestClass]
-    public class Function2Tests
+    public class Function2Tests : TestSetup
     {
         [TestMethod]
         public async Task Run_ReturnsOkObjectResult()
         {
-            
             // Arrange
             using (ShimsContext.Create())
             {
-                var logger = new Microsoft.VisualStudio.TestTools.UnitTesting.Logging.Logger<Function2>();
-                var request = new DefaultHttpContext(); var formFields = new Dictionary<string, StringValues>
+                var logger = new Logger<Function2>(new LoggerFactory());
+
+                var mockRequest = new DefaultHttpContext().Request;
+                var formFields = new Dictionary<string, StringValues>
                 {
                     { "from", "John Doe" },
                     { "message", "Hello, World!" }
                 };
                 var form = new FormCollection(formFields);
 
-
-                request.FormOptions = () => form;
+                mockRequest.Form = form;
+                mockRequest.Body = new MemoryStream();
+                mockRequest.Body.Write(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new { from = "John Doe", message = "Hello, World!" })));
+                mockRequest.Body.Flush();
+                mockRequest.Body.Seek(0, SeekOrigin.Begin);
 
                 var function = new Function2(logger);
 
                 // Act
-                var result = await function.Run(request);
+                var result = await function.Run(mockRequest);
 
                 // Assert
-                Assert.IsInstanceOfType(result, typeof(OkObjectResult));
+                Assert.IsInstanceOfType(result, typeof(OkResult));
             }
-            
         }
     }
 }
