@@ -8,6 +8,7 @@ using System.Text.Json.Serialization;
 
 namespace FunctionTutorial.Functions
 {
+    
     public class JsonMessage
     {
         [property: JsonPropertyName("from")]
@@ -15,13 +16,13 @@ namespace FunctionTutorial.Functions
         [property: JsonPropertyName("message")]
         public required string Message { get; set; }
     }
-
-        public class Function2
+    
+    public class PostMaster
     {
-        private readonly ILogger<Function2> _logger;
+        private readonly ILogger<PostMaster> _logger;
         private readonly QueueClient _queueClient;
 
-        public Function2(ILogger<Function2> logger)
+        public PostMaster(ILogger<PostMaster> logger)
         {
             _logger = logger;
 
@@ -45,9 +46,10 @@ namespace FunctionTutorial.Functions
 
         }
 
-        [Function("Function2")]
+        [Function("PostMaster")]
+        [Route("PostMaster")]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req)
         {
             // Read the request body
             string requestBody;

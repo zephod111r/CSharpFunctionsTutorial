@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Azure.Data.Tables;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,5 +14,10 @@ namespace FunctionTutorial
         public IEnumerable<Message> GetAll();
 
         public Task<Azure.AsyncPageable<Message>> GetNewMessages(DateTimeOffset since);
+
+
+        public Task DeleteMessageAsync(Message message);
+
+        public Task DeleteAllMessagesAsync();
     }
 }

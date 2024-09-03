@@ -8,19 +8,19 @@ using System.Linq;
 
 namespace FunctionTutorial.Functions
 {
-    public class Function4
+    public class Messages
     {
-        private readonly ILogger<Function4> _logger;
+        private readonly ILogger<Messages> _logger;
         private readonly IMessageRecordService _records;
 
-        public Function4(ILogger<Function4> logger, IMessageRecordService records)
+        public Messages(ILogger<Messages> logger, IMessageRecordService records)
         {
             _logger = logger;
             _records = records;
         }
 
-        [Function("Function4")]
-        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequest req)
+        [Function("Messages")]
+        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req)
         {
             try
             {

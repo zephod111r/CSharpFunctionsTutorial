@@ -18,7 +18,7 @@ namespace FunctionTutorial.Functions
         }
 
         [Function(nameof(QueuePopper))]
-        public async Task Run([QueueTrigger("messages", Connection = "QueueServiceConnectionString")] QueueMessage message)
+        public async Task Run([QueueTrigger("messages", Connection = "AzureWebJobsStorage")] QueueMessage message)
         {
             _logger.LogInformation($"C# Queue trigger function processed: {message.MessageText}");
 

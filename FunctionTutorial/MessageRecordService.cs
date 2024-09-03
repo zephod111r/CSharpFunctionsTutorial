@@ -48,5 +48,14 @@ namespace FunctionTutorial
             return messages;
         }
 
+        public async Task DeleteMessageAsync(Message message)
+        {
+            await _tableClient.DeleteEntityAsync(message.PartitionKey, message.RowKey);
+        }
+
+        public async Task DeleteAllMessagesAsync()
+        {
+            await _tableClient.DeleteAsync();
+        }
     }
 }

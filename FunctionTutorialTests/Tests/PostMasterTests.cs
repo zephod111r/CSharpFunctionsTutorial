@@ -10,7 +10,7 @@ using System.Text;
 namespace FunctionTutorial.Tests
 {
     [TestClass]
-    public class Function2Tests : TestSetup
+    public class PostMasterTests : TestSetup
     {
         [TestMethod]
         public async Task Run_ReturnsOkResult()
@@ -18,7 +18,7 @@ namespace FunctionTutorial.Tests
             // Arrange
             using (ShimsContext.Create())
             {
-                var logger = new Logger<Function2>(new LoggerFactory());
+                var logger = new Logger<PostMaster>(new LoggerFactory());
 
                 var mockRequest = new DefaultHttpContext().Request;
                 var formFields = new Dictionary<string, StringValues>
@@ -34,7 +34,7 @@ namespace FunctionTutorial.Tests
                 mockRequest.Body.Flush();
                 mockRequest.Body.Seek(0, SeekOrigin.Begin);
 
-                var function = new Function2(logger);
+                var function = new PostMaster(logger);
 
                 // Act
                 IActionResult result = await function.Run(mockRequest);
